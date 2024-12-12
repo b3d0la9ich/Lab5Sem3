@@ -21,7 +21,7 @@ void handle_client(int client_socket, Marketplace& marketplace) {
             break;
         }
 
-        if (rand() % 5 == 0) { // 20% вероятность
+        if (rand() % 10 == 0) { // 20% вероятность
             std::cout << "Грабеж активирован! Все товары будут удалены." << std::endl;
             marketplace.clearProducts();
             std::string robbery_message = "Магазин ограблен! Все товары исчезли.\n";

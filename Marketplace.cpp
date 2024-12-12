@@ -58,9 +58,21 @@ std::string Marketplace::purchaseProduct(int customerId, const std::string& prod
                 if (product.quantity == 0) {
                     products.erase(std::remove(products.begin(), products.end(), product), products.end());
                 }
-                std::ostringstream oss;
-                oss << "Покупка успешна! Остаток баланса: " << customer.balance << "\n";
-                return oss.str();
+
+                // Формируем чек
+                std::ostringstream receipt;
+                receipt << "Покупка успешна!\n";
+                receipt << "----------------------------\n";
+                receipt << "ЧЕК:\n";
+                receipt << "Покупатель: " << customer.name << "\n";
+                receipt << "Товар: " << productName << "\n";
+                receipt << "Количество: " << quantity << "\n";
+                receipt << "Общая стоимость: " << std::fixed << std::setprecision(2) << totalCost << "\n";
+                receipt << "Метод оплаты: " << paymentMethod->getMethodName() << "\n";
+                receipt << "Оставшийся баланс: " << std::fixed << std::setprecision(2) << customer.balance << "\n";
+                receipt << "----------------------------\n";
+
+                return receipt.str();
             } else {
                 return "Недостаточно средств\n";
             }
@@ -68,6 +80,7 @@ std::string Marketplace::purchaseProduct(int customerId, const std::string& prod
     }
     return "Товар не найден или недостаточно на складе\n";
 }
+
 
 void Marketplace::clearProducts() {
     products.clear();
